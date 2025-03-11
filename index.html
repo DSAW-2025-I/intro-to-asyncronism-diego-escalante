@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Who's That Pokemon</title>
+    <title>Who's That Pokemon?</title>
 </head>
 <body>
-    <h1 id="title">Who's That Pokemon</h1>
+    <div class="home-content">
+        <h1 id="title">Who's That Pokemon?</h1>
+    </div>
     <div class="search-bar">
-        <input id="pokemon-search-input" type="search" name="search-input" required="required" placeholder="Enter a Pokemon's name or number">
+        <input class="search-input" id="pokemon-search-input" type="search" name="search-input" required="required" placeholder="Enter a Pokemon's name or number">
         <button class="search-button">Search</button>
     </div>
+
+    <div class="pokemon-card">
+        <div class = "pokemon-data">
+            <h2 class ="pokemon-name"></h2>
+            <h3 class = "pokemon-id"></h3>
+            <p class="pokemon-weight"></p>
+            <p class="pokemon-height"></p>
+        </div>
+        <div class="pokemon-visual">
+            <img class = "pokemon-image" src="" alt="Pokemon image">
+            <img class = "pokemon-type" src="" alt = "Pokemon type">
+
+        </div>
+    </div>
+
 </body>
 </html>
