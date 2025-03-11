@@ -1,4 +1,5 @@
 @font-face { font-family: Pixeboy; src: "./fonts/Pixeboy.ttf"; }
+@font-face { font-family: Press-Start-2P; src: "./fonts/PressStart2P-vaV7.ttf";}
 
 *{
     padding: 0;
@@ -35,4 +36,24 @@ body{
     .search-button{
         background-image: "./assets/search-icon";
     }
+}
+
+.pokemon-card{
+    display:inline-flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 6px;
+    border: solid black 1px;
+    font-family: 'Press-Start-2P';
+    .pokemon-data{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .pokemon-visual{
+        display: flex;
+        flex-direction: column;
+        gap:0;
+    }
+
 }
