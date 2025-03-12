@@ -1,5 +1,7 @@
-@font-face { font-family: Pixeboy; src: "./fonts/Pixeboy.ttf"; }
-@font-face { font-family: Press-Start-2P; src: "./fonts/PressStart2P-vaV7.ttf";}
+@font-face { font-family: Pixeboy; src: url(./fonts/Pixeboy.ttf); }
+@font-face { font-family: Press-Start-2P; src: url(./fonts/PressStart2P-vaV7.ttf);}
+@font-face { font-family: Pixeloid; src: url(./fonts/pixeloid/PixeloidSans-mLxMm.ttf); font-weight:sans}
+
 
 *{
     padding: 0;
@@ -9,9 +11,9 @@
 html,body{
     width: 100vw;
     height: 100vh; 
-    padding: 5%
 }
 body{
+
     background-color: hsl(0, 70%, 40%);
 }
 .home-content{
@@ -30,11 +32,19 @@ body{
     width: 100%;
     display: flex;
     justify-content: space-between;
+    font-family: 'Pixeloid-sans';
+    border: solid black 1px;
+    border-radius: 6px;
+
     .search-input{
         width: 100%;
+        background-color: transparent;
+        border: solid transparent 0px;
+        font-family: 'Pixeloid';
     }
     .search-button{
-        background-image: "./assets/search-icon";
+        background: transparent;
+        border: solid transparent 0px
     }
 }
 
@@ -45,10 +55,34 @@ body{
     border-radius: 6px;
     border: solid black 1px;
     font-family: 'Press-Start-2P';
+    list-style-type: none;
     .pokemon-data{
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 20px;
+        .pokemon-identifier{
+            display: flex;
+            flex-direction: column;
+            gap:5px;
+            .pokemon-name{
+                font-size: 20px;
+            }
+            .pokemon-number{
+                font-size: 15px;
+                color: gray;
+            }
+        }
+        .pokemon-info{
+            display: flex;
+            flex-direction: column;
+            gap:8px;
+            .pokemon-weight{
+                font-size: 17.5px;
+            }
+            .pokemon-height{
+                font-size: 17.5px;
+            }
+        }
     }
     .pokemon-visual{
         display: flex;
