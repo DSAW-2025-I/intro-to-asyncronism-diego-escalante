@@ -56,7 +56,7 @@ body{
         border: solid transparent 0px
     }
 }
-.pokemon-list{
+#pokemon-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -84,6 +84,9 @@ body{
                 gap:5px;
                 .pokemon-name{
                     font-size: 20px;
+                }
+                .pokemon-name::first-letter{
+                    text-transform: capitalize;
                 }
                 .pokemon-number{
                     font-size: 15px;
