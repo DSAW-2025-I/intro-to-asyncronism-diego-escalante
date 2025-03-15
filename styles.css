@@ -13,13 +13,19 @@ html,body{
     height: 100vh; 
 }
 body{
-
     background-color: hsl(0, 70%, 40%);
 }
 .home-content{
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    #title{
+        font-size: 68px;
+        text-align: center;
+        line-height: 8vh;
+    }
 }
 #title{
     color:hsl(52, 100%, 50%);
@@ -35,67 +41,69 @@ body{
     font-family: 'Pixeloid-sans';
     border: solid black 1px;
     border-radius: 6px;
+    margin-bottom: 4vh;
 
     .search-input{
         width: 100%;
         background-color: transparent;
         border: solid transparent 0px;
         font-family: 'Pixeloid';
+        text-align: center;
     }
     .search-button{
         background: transparent;
         border: solid transparent 0px
     }
 }
-
-.pokemon-card{
-    display:inline-flex;
-    justify-content: center;
-    background-color: white;
-    border-radius: 6px;
-    border: solid black 1px;
-    font-family: 'Press-Start-2P';
-    list-style-type: none;
-    .pokemon-data{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        .pokemon-identifier{
+.pokemon-list{
+    display: flex;
+    flex-wrap: wrap;
+    .pokemon-card{
+        display:inline-flex;
+        justify-content: center;
+        background-color: white;
+        border-radius: 6px;
+        border: solid black 1px;
+        font-family: 'Press-Start-2P';
+        list-style-type: none;
+        width: 315px;
+        .pokemon-data{
             display: flex;
             flex-direction: column;
-            gap:5px;
-            .pokemon-name{
-                font-size: 20px;
+            gap: 20px;
+            padding-top: 6px;
+            padding-left: 6px;
+            .pokemon-identifier{
+                display: flex;
+                flex-direction: column;
+                gap:5px;
+                .pokemon-name{
+                    font-size: 20px;
+                }
+                .pokemon-number{
+                    font-size: 15px;
+                    color: gray;
+                }
             }
-            .pokemon-number{
-                font-size: 15px;
-                color: gray;
+            .pokemon-info{
+                display: flex;
+                flex-direction: column;
+                gap:8px;
+                font-size: 13px;
             }
         }
-        .pokemon-info{
+        .pokemon-visual{
             display: flex;
             flex-direction: column;
-            gap:8px;
-            .pokemon-weight{
-                font-size: 17.5px;
-            }
-            .pokemon-height{
-                font-size: 17.5px;
-            }
+            gap:0;
         }
-    }
-    .pokemon-visual{
-        display: flex;
-        flex-direction: column;
-        gap:0;
-    }
 
+    }
 }
-
 @media screen and (min-width: 768){
 
 }
 
 @media screen and (min-width: 1024){
-    
+
 }
