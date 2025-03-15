@@ -35,13 +35,14 @@ body{
 
 .search-bar{
     background-color: white;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     font-family: 'Pixeloid-sans';
     border: solid black 1px;
     border-radius: 6px;
     margin-bottom: 4vh;
+    margin-left: 10px;
+    margin-right: 10px;
 
     .search-input{
         width: 100%;
@@ -58,6 +59,8 @@ body{
 .pokemon-list{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    
     .pokemon-card{
         display:inline-flex;
         justify-content: center;
@@ -66,7 +69,9 @@ body{
         border: solid black 1px;
         font-family: 'Press-Start-2P';
         list-style-type: none;
-        width: 315px;
+        width: 298px;
+        margin-left: 10px;
+        margin-right: 10px;
         .pokemon-data{
             display: flex;
             flex-direction: column;
