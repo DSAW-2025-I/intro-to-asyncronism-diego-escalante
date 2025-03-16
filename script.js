@@ -1,10 +1,25 @@
+
+
+async function fetchAllTypesWithIcons() {
+    const response = await fetch("https://pokeapi.co/api/v2/type/");
+    const data = await response.json();
+    const typeIcons = {};
+    data.results.forEach(async type => {
+        const typeResponse= await fetch(`${type.url}`);
+        const typeData = await typeResponse.json();
+        const typeId = typeData.id;
+        typeIcons[`${type.name}`] = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeId}.png`; //Last pokemon type was introduced in sixth generation
+    });
+    return typeIcons;
+}
+
 async function fetchPokemonList(limit = 20) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
     const data = await response.json();
     return data.results; // Returns an array of Pokémon with names and URLs
 }
 
-async function fetchPokemonDetails(pokemonList) {
+async function fetchPokemonDetails(pokemonList, typeIcons) {
     const pokemonPromises = pokemonList.map(async (pokemon) => {
         const response = await fetch(pokemon.url);
         const data = await response.json();
@@ -15,12 +30,16 @@ async function fetchPokemonDetails(pokemonList) {
             front_default: data.sprites.front_default,
             back_default: data.sprites.back_default,
             front_shiny: data.sprites.front_shiny,
-            types: data.types,
+            types: data.types.map(t => t.type.name),
+            typeSprites: data.types.map(t => typeIcons[t.type.name]),
             id: data.id
         };
     });
+    console.log(pokemonPromises)
     return Promise.all(pokemonPromises); // Waits for all fetches
 }
+
+
 
 function displayPokemons(pokemonArray) {
     const container = document.getElementById("pokemon-list");
@@ -31,20 +50,19 @@ function displayPokemons(pokemonArray) {
         card.classList.add("pokemon-card");
 
         card.innerHTML = `
+            <h2 class ="pokemon-name">${pokemon.name}</h2>
             <div class = "pokemon-data">
-                <div class = "pokemon-identifier">
-                    <h2 class ="pokemon-name">${pokemon.name}</h2>
-                    <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
-                </div>
                 <div class="pokemon-info">
+                    <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
                     <p class="pokemon-weight"><span class = "pokemon-weight-prefix">Weight: </span>${pokemon.weight}<span class="pokemon-weight-units">kg</span></p>
                     <p class="pokemon-height"><span class = "pokemon-height-prefix">Height: </span>${pokemon.height}<span class="pokemon-height-units">m</span></p>
                 </div>
-
-            </div>
-            <div class="pokemon-visual">
-                <img class = "pokemon-image" src="${pokemon.front_default}" alt="Pokemon image">
-                <img class = "pokemon-type" src="" alt = "Pokemon type">
+                <div class="pokemon-visual">
+                    <img class = "pokemon-image" src="${pokemon.front_default}" alt="Pokemon image">
+                    <div class="pokemon-types">
+                        ${pokemon.typeSprites.map(icon => `<img src="${icon}" class="type-icon">`).join("")}
+                    </div>
+                </div>
             </div>
         `;
         container.appendChild(card);
@@ -52,7 +70,8 @@ function displayPokemons(pokemonArray) {
 }
 async function loadPokemons(limit = 10) {
     const pokemonList = await fetchPokemonList(limit);
-    const detailedPokemons = await fetchPokemonDetails(pokemonList);
+    const typeIcons = await fetchAllTypesWithIcons();
+    const detailedPokemons = await fetchPokemonDetails(pokemonList, typeIcons);
     displayPokemons(detailedPokemons);
 }
 

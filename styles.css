@@ -62,7 +62,8 @@ body{
     justify-content: center;
     
     .pokemon-card{
-        display:inline-flex;
+        display: inline-flex;
+        flex-direction: column;
         justify-content: center;
         background-color: white;
         border-radius: 6px;
@@ -72,42 +73,54 @@ body{
         width: 298px;
         margin-left: 10px;
         margin-right: 10px;
+        margin-bottom: 10px;
+        .pokemon-name{
+            font-size: 20px;
+            margin-left: 6px;
+            margin-top: 4px;
+        }
+        .pokemon-name::first-letter{
+            text-transform: capitalize;
+        }
+    }   
         .pokemon-data{
+        display: flex;
+        margin: 6px;
+        .pokemon-number{
+            font-size: 15px;
+            color: gray;
+        }
+        .pokemon-info{
             display: flex;
+            flex-basis: 100%;
             flex-direction: column;
-            gap: 20px;
-            padding-top: 6px;
-            padding-left: 6px;
-            .pokemon-identifier{
-                display: flex;
-                flex-direction: column;
-                gap:5px;
-                .pokemon-name{
-                    font-size: 20px;
-                }
-                .pokemon-name::first-letter{
-                    text-transform: capitalize;
-                }
-                .pokemon-number{
-                    font-size: 15px;
-                    color: gray;
-                }
-            }
-            .pokemon-info{
-                display: flex;
-                flex-direction: column;
-                gap:8px;
-                font-size: 13px;
-            }
+            gap:8px;
+            font-size: 13px;
+
         }
         .pokemon-visual{
             display: flex;
+            flex-grow: 0;
+            flex-grow:1;
             flex-direction: column;
             gap:0;
+            .pokemon-image{
+                width: 90px;
+                height: auto;
+            }
+            .pokemon-types{
+                display: flex;
+                justify-content: center;
+                .type-icon{
+                    font-size: 0.5rem;
+                    width: 40px;
+                    height: auto;
+                }
+            }
         }
-
     }
 }
+
 @media screen and (min-width: 768){
 
 }
