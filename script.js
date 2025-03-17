@@ -100,7 +100,11 @@ async function showPokemonStats(pokemonId){
     };
     const modal = document.getElementById("pokemon-modal");
     modal.innerHTML = `
-        <img src="${pokemon.front_default}" alt="${data.name}">
+        <img id="modal-pokemon-image" src="${pokemon.front_default}" alt="${data.name}">
+        <div class="control-buttons-container">
+            <button class="control-button" id="shiny-button"><img class="control-button" src="./assets/shiny.png"></button>
+            <button class="control-button" id= "rotate-button"><img class="control-button" src="./assets/reload.png"></button>
+        </div>
         <h2 class = "pokemon-name">${pokemon.name}</h2>
         <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
         <div class="stats-container">
@@ -114,23 +118,46 @@ async function showPokemonStats(pokemonId){
         <button onclick="closeModal()">Close</button>
     `;
     modal.style.display = "flex";
+    let isShiny = false;
+    let isBack = false;
+    const pokemonImage = document.getElementById("modal-pokemon-image");
+    const rotateButton = document.getElementById("rotate-button");
+    const shinyButton = document.getElementById("shiny-button");
+
+    function updateImage() {
+        const spriteType = isShiny ? "front_shiny" : "front_default";
+        const spriteBackType = isShiny ? "back_shiny" : "back_default";
+
+        pokemonImage.src = isBack ? data.sprites[spriteBackType] : data.sprites[spriteType];
+        console.log(pokemonImage.src);
+    }
+    rotateButton.addEventListener("click", () => {
+        isBack = !isBack;
+        updateImage();
+    });
+
+    shinyButton.addEventListener("click", () => {
+        isShiny = !isShiny;
+        updateImage();
+    });
+    updateImage();
 }
 const searchButton = document.getElementById("pokemon-search-button");
 searchButton.addEventListener('click', async () =>{
     const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
-    if (pokemonToSearch === ""){
+    if (pokemonToSearch === ""){ //Didn't search anything
+        loadPokemons(1025);
         alert("Please enter a pokemon name or id");
         return;
     } 
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch}`);
-    if(!response.ok){
+    if(!response.ok){ //Couldnt find pokemon. Change pokemon list
+        
         alert("Something went wrong!");
         return;
     }
-    //FIX FROM HERE
     console.log(response);
     const data = await fetch(response.url);
-    const pokemon = await data.json();
     const pokemonArray = Array(data);
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
