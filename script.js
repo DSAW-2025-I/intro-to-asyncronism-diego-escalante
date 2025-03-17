@@ -105,13 +105,13 @@ async function showPokemonStats(pokemonId){
         <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
         <div class="stats-container">
             ${pokemon.stats.map(stat => `
-                <p><strong>${stat.stat.name}:</strong></p>
-                <div class="stat-bar">${generateStatBar(stat.base_stat)}</div>
+                <h4 class = "stat-name"><strong>${stat.stat.name}</strong></h4>
+                <div class = "stat-bar">${generateStatBar(stat.base_stat)}</div>
             `).join("")}
         </div>
         <button onclick="closeModal()">Close</button>
     `;
-    modal.style.display = "block";
+    modal.style.display = "flex";
 }
 
 loadPokemons(1025);
