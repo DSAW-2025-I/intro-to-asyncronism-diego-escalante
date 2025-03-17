@@ -101,12 +101,14 @@ async function showPokemonStats(pokemonId){
     const modal = document.getElementById("pokemon-modal");
     modal.innerHTML = `
         <img src="${pokemon.front_default}" alt="${data.name}">
-        <h2>${pokemon.name}</h2>
+        <h2 class = "pokemon-name">${pokemon.name}</h2>
         <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
         <div class="stats-container">
             ${pokemon.stats.map(stat => `
-                <h4 class = "stat-name"><strong>${stat.stat.name}</strong></h4>
-                <div class = "stat-bar">${generateStatBar(stat.base_stat)}</div>
+                <div class = "stat">
+                    <h4 class = "stat-name"><strong>${stat.stat.name}</strong></h4>
+                    <div class = "stat-bar">${generateStatBar(stat.base_stat)}</div>
+                </div>
             `).join("")}
         </div>
         <button onclick="closeModal()">Close</button>

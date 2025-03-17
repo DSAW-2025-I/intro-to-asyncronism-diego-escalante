@@ -78,8 +78,6 @@ body{
             font-size: 20px;
             margin-left: 6px;
             margin-top: 4px;
-        }
-        .pokemon-name::first-letter{
             text-transform: capitalize;
         }
         .pokemon-data{
@@ -129,7 +127,8 @@ body{
     transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
-    border-radius: 10px;
+    border: solid black 1px;
+    border-radius: 6px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     display: none;
 }
@@ -137,24 +136,44 @@ body{
 #pokemon-modal{
     flex-direction: column;
     align-items: center;
+    font-family:'Press-Start-2P';
+    font-weight: 100;
+    .pokemon-name{
+        text-transform: capitalize;
+        font-size: 15px;
+    }
+    .pokemon-number{
+        color: gray;
+        font-size: 10px;
+    }
     .stats-container {
         margin-top: 10px;
-        .stat-bar {
-            display: flex;
-            gap: 2px;
-            .stat-square-filled {
-                width: 12px;
-                height: 12px;
-                background-color: gray;
-                border: 1px solid black;
-                display: inline-block;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap:10px;
+        .stat{
+            .stat-name{
+                text-transform: uppercase;
+                font-size: 10px;
             }
-            .stat-square-blank{
-                width: 12px;
-                height: 12px;
-                background-color: transparent;
-                border: 1px solid black;
-                display: inline-block;
+            .stat-bar {
+                display: flex;
+                gap: 2px;
+                .stat-square-filled {
+                    width: 12px;
+                    height: 12px;
+                    background-color: gray;
+                    border: 1px solid black;
+                    display: inline-block;
+                }
+                .stat-square-blank{
+                    width: 12px;
+                    height: 12px;
+                    background-color: transparent;
+                    border: 1px solid black;
+                    display: inline-block;
+                }
             }
         }
     }
