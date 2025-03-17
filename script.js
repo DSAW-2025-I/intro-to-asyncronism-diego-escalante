@@ -1,5 +1,3 @@
-
-
 async function fetchAllTypesWithIcons() {
     const response = await fetch("https://pokeapi.co/api/v2/type/");
     const data = await response.json();
@@ -25,8 +23,8 @@ async function fetchPokemonDetails(pokemonList, typeIcons) {
         const data = await response.json();
         return {
             name: data.name,
-            weight: data.weight,
-            height: data.height,
+            weight: data.weight /10, //it is given in hg
+            height: data.height /10, //it is given in dm
             front_default: data.sprites.front_default,
             back_default: data.sprites.back_default,
             front_shiny: data.sprites.front_shiny,
@@ -38,8 +36,6 @@ async function fetchPokemonDetails(pokemonList, typeIcons) {
     console.log(pokemonPromises)
     return Promise.all(pokemonPromises); // Waits for all fetches
 }
-
-
 
 function displayPokemons(pokemonArray) {
     const container = document.getElementById("pokemon-list");
@@ -65,9 +61,11 @@ function displayPokemons(pokemonArray) {
                 </div>
             </div>
         `;
+        card.addEventListener('click', () => showPokemonStats(pokemon.id));
         container.appendChild(card);
     });
 }
+
 async function loadPokemons(limit = 10) {
     const pokemonList = await fetchPokemonList(limit);
     const typeIcons = await fetchAllTypesWithIcons();
@@ -75,6 +73,45 @@ async function loadPokemons(limit = 10) {
     displayPokemons(detailedPokemons);
 }
 
+function generateStatBar(statValue) {
+    const totalSquares = 10;
+    const filledSquares = Math.ceil(statValue / 25.5); // 1 square per 25.5 points
+    return Array(totalSquares)
+        .fill('<div class="stat-square-filled"></div>', 0, filledSquares)
+        .fill('<div class="stat-square-blank"></div>', filledSquares, totalSquares)
+        .join("");
+}
 
+function closeModal() {
+    document.getElementById("pokemon-modal").style.display = "none";
+}
 
-loadPokemons(20);
+async function showPokemonStats(pokemonId){
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+    const data = await response.json();
+    const pokemon = {
+        name: data.name,
+        front_default: data.sprites.front_default,
+        back_default: data.sprites.back_default,
+        front_shiny: data.sprites.front_shiny,
+        back_shiny: data.sprites.back_shiny,
+        stats: data.stats,
+        id: data.id
+    };
+    const modal = document.getElementById("pokemon-modal");
+    modal.innerHTML = `
+        <img src="${pokemon.front_default}" alt="${data.name}">
+        <h2>${pokemon.name}</h2>
+        <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
+        <div class="stats-container">
+            ${pokemon.stats.map(stat => `
+                <p><strong>${stat.stat.name}:</strong></p>
+                <div class="stat-bar">${generateStatBar(stat.base_stat)}</div>
+            `).join("")}
+        </div>
+        <button onclick="closeModal()">Close</button>
+    `;
+    modal.style.display = "block";
+}
+
+loadPokemons(1025);
