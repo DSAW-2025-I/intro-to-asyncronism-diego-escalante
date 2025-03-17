@@ -115,7 +115,6 @@ async function showPokemonStats(pokemonId){
     `;
     modal.style.display = "flex";
 }
-
 const searchButton = document.getElementById("pokemon-search-button");
 searchButton.addEventListener('click', async () =>{
     const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
@@ -130,7 +129,8 @@ searchButton.addEventListener('click', async () =>{
     }
     //FIX FROM HERE
     console.log(response);
-    const data = await response.json();
+    const data = await fetch(response.url);
+    const pokemon = await data.json();
     const pokemonArray = Array(data);
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
