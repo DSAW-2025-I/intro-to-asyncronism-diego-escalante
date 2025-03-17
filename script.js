@@ -116,4 +116,25 @@ async function showPokemonStats(pokemonId){
     modal.style.display = "flex";
 }
 
+const searchButton = document.getElementById("pokemon-search-button");
+searchButton.addEventListener('click', async () =>{
+    const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
+    if (pokemonToSearch === ""){
+        alert("Please enter a pokemon name or id");
+        return;
+    } 
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch}`);
+    if(!response.ok){
+        alert("Something went wrong!");
+        return;
+    }
+    //FIX FROM HERE
+    console.log(response);
+    const data = await response.json();
+    const pokemonArray = Array(data);
+    const typeIcons = await fetchAllTypesWithIcons();
+    const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
+    displayPokemons(detailedPokemons);
+})
+
 loadPokemons(1025);
