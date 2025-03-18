@@ -103,7 +103,7 @@ async function showPokemonStats(pokemonId){
         <img id="modal-pokemon-image" src="${pokemon.front_default}" alt="${data.name}">
         <div class="control-buttons-container">
             <button class="control-button" id="shiny-button"><img class="control-button" src="./assets/shiny.png"></button>
-            <button class="control-button" id= "rotate-button"><img class="control-button" src="./assets/reload.png"></button>
+            <button class="control-button" id= "rotate-button"><img class="control-button" src="./assets/rotate.svg"></button>
         </div>
         <h2 class = "pokemon-name">${pokemon.name}</h2>
         <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
@@ -142,10 +142,12 @@ async function showPokemonStats(pokemonId){
     });
     updateImage();
 }
+const searchAlert = document.getElementById("search-alert");
+const alertMessage = document.getElementById("alert-message");
 const searchButton = document.getElementById("pokemon-search-button");
 searchButton.addEventListener('click', async () =>{
     const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
-    if (pokemonToSearch === ""){ //Didn't search anything
+    if (pokemonToSearch === ""){ //Didn't search anything. Something should appear to make the user aware
         loadPokemons(1025);
         alert("Please enter a pokemon name or id");
         return;
@@ -161,7 +163,13 @@ searchButton.addEventListener('click', async () =>{
     const pokemonArray = Array(data);
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
-    displayPokemons(detailedPokemons);
+    displayPokemons(detailedPokemons); 
+    //I should add something to help the user load the pokemons again
+
+    searchAlert.style.display = "flex";
+    alertMessage.innerHTML = 'Your pokemon was found! Click the botton below to load all the pokemons again.'
+
+
 })
 
 loadPokemons(1025);

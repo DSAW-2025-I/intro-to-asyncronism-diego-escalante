@@ -10,27 +10,17 @@
     <div class="home-content">
         <h1 id="title">Who's That Pokemon?</h1>
     </div>
-    <div class="search-bar">
-        <input class="search-input" id="pokemon-search-input" type="search" name="search-input" required="required" placeholder="Enter a Pokemon's name or number">
-        <button class="search-button" id="pokemon-search-button"><img src="./assets/search-icon.svg" alt="Search"></img></button>
+    <div class="search-module">
+        <div class="search-bar">
+            <input class="search-input" id="pokemon-search-input" type="search" name="search-input" required="required" placeholder="Enter a Pokemon's name or number">
+            <button class="search-button" id="pokemon-search-button"><img src="./assets/search-icon.svg" alt="Search"></img></button>
+        </div>
+        <div id="search-alert">
+            <p id="alert-message"></p>
+            <button id="reset-search-button"><img src="./assets/reload.png"></button>
+        </div>
     </div>
-
-    <ol id="pokemon-list">
-        <div class="pokemon-card">
-            <h2 class ="pokemon-name">Bulbasaur</h2>
-            <div class = "pokemon-data">
-                <div class="pokemon-info">
-                    <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>0001</h3>
-                    <p class="pokemon-weight"><span class = "pokemon-weight-prefix">Weight: </span><span class="pokemon-weight-units">kg</span></p>
-                    <p class="pokemon-height"><span class = "pokemon-height-prefix">Height: </span><span class="pokemon-height-units">m</span></p>
-                </div>
-                <div class="pokemon-visual">
-                    <img class = "pokemon-image" src="./assets/bulbasaur.png" alt="Pokemon image">
-                    <img class = "pokemon-types" src="" alt = "Pokemon type">
-                </div>
-            </div>
-        </li>
-    </ol>
+    <ol id="pokemon-list"></ol>
     <div id = "pokemon-modal" class = "modal"></div>
     <script src="script.js"></script>
 </body>
