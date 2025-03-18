@@ -145,6 +145,14 @@ async function showPokemonStats(pokemonId){
 const searchAlert = document.getElementById("search-alert");
 const alertMessage = document.getElementById("alert-message");
 const searchButton = document.getElementById("pokemon-search-button");
+const pokemonList = document.getElementById("pokemon-list");
+const resetSearchButton = document.getElementById("reset-search-button");
+resetSearchButton.addEventListener('click', ()=>{
+    searchAlert.style.display ="none";
+    pokemonList.innerHTML = "";
+    loadPokemons(1025);
+}
+)
 searchButton.addEventListener('click', async () =>{
     const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
     if (pokemonToSearch === ""){ //Didn't search anything. Something should appear to make the user aware
@@ -154,21 +162,19 @@ searchButton.addEventListener('click', async () =>{
     } 
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch}`);
     if(!response.ok){ //Couldnt find pokemon. Change pokemon list
-        
-        alert("Something went wrong!");
+        pokemonList.innerHTML = ""
+        searchAlert.style.display="flex";
+        alertMessage.innerHTML = 'Something went wrong! Your pokemon was not found. Check your spelling and try again. Click the button below to load all the pokemons again.';
         return;
     }
-    console.log(response);
     const data = await fetch(response.url);
     const pokemonArray = Array(data);
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
     displayPokemons(detailedPokemons); 
     //I should add something to help the user load the pokemons again
-
     searchAlert.style.display = "flex";
-    alertMessage.innerHTML = 'Your pokemon was found! Click the botton below to load all the pokemons again.'
-
+    alertMessage.innerHTML = 'Your pokemon was found! Click the button below to load all the pokemons again.';
 
 })
 
