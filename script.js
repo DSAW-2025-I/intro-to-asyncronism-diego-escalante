@@ -193,7 +193,6 @@ searchButton.addEventListener('click', async () =>{
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonArray, typeIcons);
     displayPokemons(detailedPokemons); 
-    //I should add something to help the user load the pokemons again
     searchAlert.style.display = "flex";
     alertMessage.innerHTML = 'Your pokemon was found! Click the button below to load all the pokemons again.';
 
