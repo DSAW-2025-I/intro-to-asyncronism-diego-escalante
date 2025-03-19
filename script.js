@@ -1,45 +1,70 @@
 async function fetchAllTypesWithIcons() {
-    const response = await fetch("https://pokeapi.co/api/v2/type/");
-    const data = await response.json();
-    const typeIcons = {};
-    data.results.forEach(async type => {
-        const typeResponse= await fetch(`${type.url}`);
-        const typeData = await typeResponse.json();
-        const typeId = typeData.id;
-        typeIcons[`${type.name}`] = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeId}.png`; //Last pokemon type was introduced in sixth generation
-    });
-    return typeIcons;
+    try{
+        const response = await fetch("https://pokeapi.co/api/v2/type/");
+        if (!response.ok) throw new Error("Failed to fetch types.");
+        const data = await response.json();
+        const typeIcons = {};
+        data.results.forEach(async type => {
+            try{
+                const typeResponse= await fetch(`${type.url}`);
+                if(!typeResponse.ok) throw new Error(`Failed to fetch type: ${type.name}`);
+                const typeData = await typeResponse.json();
+                const typeId = typeData.id;
+                typeIcons[`${type.name}`] = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeId}.png`; //Last pokemon type was introduced in sixth generation
+            } catch (error){
+                console.error(error.message);
+                typeIcons[`${type.name}`] = "./assets/"; //Add failed type
+            }
+        });
+        return typeIcons;
+    } catch (error) {
+        console.error(error.message);
+        return {};
+    }
 }
 
 async function fetchPokemonList(limit = 20) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
-    const data = await response.json();
-    return data.results; // Returns an array of Pokémon with names and URLs
+    try{
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
+        if (!response.ok) throw new Error ("Failed to fetch Pokemon list.");        const data = await response.json();
+        return data.results; // Returns an array of Pokémon with names and URLs
+    } catch (error) {
+        console.error(error.message);
+        return []; // Return empty list to avoid errors}
+        //Somewhere in these functions i should let the user refresh the pokemonList
+    }
 }
 
 async function fetchPokemonDetails(pokemonList, typeIcons) {
     const pokemonPromises = pokemonList.map(async (pokemon) => {
-        const response = await fetch(pokemon.url);
-        const data = await response.json();
-        return {
-            name: data.name,
-            weight: data.weight /10, //it is given in hg
-            height: data.height /10, //it is given in dm
-            front_default: data.sprites.front_default,
-            back_default: data.sprites.back_default,
-            front_shiny: data.sprites.front_shiny,
-            types: data.types.map(t => t.type.name),
-            typeSprites: data.types.map(t => typeIcons[t.type.name]),
-            id: data.id
-        };
+        try{
+            const response = await fetch(pokemon.url);
+            if(!response.ok) throw new Error(`Failed to fetch Pokemon: ${pokemon.name}`);
+            const data = await response.json();
+            return {
+                name: data.name,
+                weight: data.weight /10, //it is given in hg
+                height: data.height /10, //it is given in dm
+                front_default: data.sprites.front_default,
+                back_default: data.sprites.back_default,
+                front_shiny: data.sprites.front_shiny,
+                types: data.types.map(t => t.type.name),
+                typeSprites: data.types.map(t => typeIcons[t.type.name]),
+                id: data.id
+            };
+        } catch(error){
+            console.error(error.message);
+            return null;
+        }
     });
-    console.log(pokemonPromises)
-    return Promise.all(pokemonPromises); // Waits for all fetches
+    console.log(pokemonPromises);
+    return (await Promise.all(pokemonPromises)).filter(pokemon => pokemon !== null); // Waits for all fetches and filter those which are null
 }
 
 function displayPokemons(pokemonArray) {
     const container = document.getElementById("pokemon-list");
     container.innerHTML = ""; // Clear existing content
+    //probably add the reloader here, just in case the pokemonArray is empty
     pokemonArray.forEach((pokemon) => {
         const card = document.createElement("li");
         card.classList.add("pokemon-card");
