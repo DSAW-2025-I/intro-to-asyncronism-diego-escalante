@@ -40,11 +40,9 @@ async function fetchPokemonDetails(pokemonList, typeIcons) {
 function displayPokemons(pokemonArray) {
     const container = document.getElementById("pokemon-list");
     container.innerHTML = ""; // Clear existing content
-
     pokemonArray.forEach((pokemon) => {
         const card = document.createElement("li");
         card.classList.add("pokemon-card");
-
         card.innerHTML = `
             <h2 class ="pokemon-name">${pokemon.name}</h2>
             <div class = "pokemon-data">
@@ -67,9 +65,12 @@ function displayPokemons(pokemonArray) {
 }
 
 async function loadPokemons(limit = 10) {
+    const loadingSpinner = document.getElementById("loading-spinner");
+    loadingSpinner.style.display = "block";
     const pokemonList = await fetchPokemonList(limit);
     const typeIcons = await fetchAllTypesWithIcons();
     const detailedPokemons = await fetchPokemonDetails(pokemonList, typeIcons);
+    loadingSpinner.style.display = "none";
     displayPokemons(detailedPokemons);
 }
 
