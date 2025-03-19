@@ -84,6 +84,7 @@ function generateStatBar(statValue) {
 
 function closeModal() {
     document.getElementById("pokemon-modal").style.display = "none";
+    document.getElementById("body").style.overflow = "auto"
 }
 
 async function showPokemonStats(pokemonId){
@@ -99,25 +100,31 @@ async function showPokemonStats(pokemonId){
         id: data.id
     };
     const modal = document.getElementById("pokemon-modal");
-    modal.innerHTML = `        
-        <button class="close-modal-button" onclick="closeModal()"><img class="close-modal-button" alt="Close"></button>
-        <img id="modal-pokemon-image" src="${pokemon.front_default}" alt="${data.name}">
-        <div class="control-buttons-container">
-            <button class="control-button" id="shiny-button"><img class="control-button" src="./assets/shiny.png"></button>
-            <button class="control-button" id= "rotate-button"><img class="control-button" src="./assets/rotate.svg"></button>
-        </div>
-        <h2 class = "pokemon-name">${pokemon.name}</h2>
-        <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
-        <div class="stats-container">
-            ${pokemon.stats.map(stat => `
-                <div class = "stat">
-                    <h4 class = "stat-name"><strong>${stat.stat.name}</strong></h4>
-                    <div class = "stat-bar">${generateStatBar(stat.base_stat)}</div>
-                </div>
-            `).join("")}
+    const body = document.getElementById("body");
+    modal.innerHTML = `
+        <div id="pokemon-modal-content" class="modal">        
+            <div class = "close-module">
+                <button class="close-modal-button" onclick="closeModal()"><img src = "./assets/close-box.svg" class="close-modal-button" alt="Close"></button>
+            </div>
+            <img id="modal-pokemon-image" src="${pokemon.front_default}" alt="${data.name}">
+            <div class="control-buttons-container">
+                <button class="control-button" id="shiny-button"><img class="control-button" src="./assets/shiny.png"></button>
+                <button class="control-button" id= "rotate-button"><img class="control-button" src="./assets/rotate.svg"></button>
+            </div>
+            <h2 class = "pokemon-name">${pokemon.name}</h2>
+            <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
+            <div class="stats-container">
+                ${pokemon.stats.map(stat => `
+                    <div class = "stat">
+                        <h4 class = "stat-name"><strong>${stat.stat.name}</strong></h4>
+                        <div class = "stat-bar">${generateStatBar(stat.base_stat)}</div>
+                    </div>
+                `).join("")}
+            </div>
         </div>
     `;
     modal.style.display = "flex";
+    body.style.overflow = "hidden";
     let isShiny = false;
     let isBack = false;
     const pokemonImage = document.getElementById("modal-pokemon-image");
@@ -153,11 +160,24 @@ resetSearchButton.addEventListener('click', ()=>{
     loadPokemons(1025);
 }
 )
+
+
+document.getElementById("pokemon-search-input").addEventListener("keyup", function(event) { //Press search button when 'enter' is pressed
+        // Number 13 is the "Enter" key on the keyboard
+    if (event.key === 'Enter') {
+      // Cancel the default action, if needed
+    event.preventDefault();
+      // Trigger the button element with a click
+    searchButton.click();
+    }
+})
+
+
 searchButton.addEventListener('click', async () =>{
     const pokemonToSearch = document.getElementById("pokemon-search-input").value.trim().toLowerCase();
     if (pokemonToSearch === ""){ //Didn't search anything. Something should appear to make the user aware
-        loadPokemons(1025);
-        alert("Please enter a pokemon name or id");
+        searchAlert.style.display = "flex";
+        alertMessage.innerHTML = "Please enter a search input!"
         return;
     } 
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch}`);
