@@ -99,7 +99,8 @@ async function showPokemonStats(pokemonId){
         id: data.id
     };
     const modal = document.getElementById("pokemon-modal");
-    modal.innerHTML = `
+    modal.innerHTML = `        
+        <button class="close-modal-button" onclick="closeModal()"><img class="close-modal-button" alt="Close"></button>
         <img id="modal-pokemon-image" src="${pokemon.front_default}" alt="${data.name}">
         <div class="control-buttons-container">
             <button class="control-button" id="shiny-button"><img class="control-button" src="./assets/shiny.png"></button>
@@ -115,7 +116,6 @@ async function showPokemonStats(pokemonId){
                 </div>
             `).join("")}
         </div>
-        <button onclick="closeModal()">Close</button>
     `;
     modal.style.display = "flex";
     let isShiny = false;
