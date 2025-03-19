@@ -26,7 +26,8 @@ async function fetchAllTypesWithIcons() {
 async function fetchPokemonList(limit = 20) {
     try{
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
-        if (!response.ok) throw new Error ("Failed to fetch Pokemon list.");        const data = await response.json();
+        if (!response.ok) throw new Error ("Failed to fetch Pokemon list.");        
+        const data = await response.json();
         return data.results; // Returns an array of Pokémon with names and URLs
     } catch (error) {
         console.error(error.message);
@@ -65,28 +66,36 @@ function displayPokemons(pokemonArray) {
     const container = document.getElementById("pokemon-list");
     container.innerHTML = ""; // Clear existing content
     //probably add the reloader here, just in case the pokemonArray is empty
-    pokemonArray.forEach((pokemon) => {
-        const card = document.createElement("li");
-        card.classList.add("pokemon-card");
-        card.innerHTML = `
-            <h2 class ="pokemon-name">${pokemon.name}</h2>
-            <div class = "pokemon-data">
-                <div class="pokemon-info">
-                    <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
-                    <p class="pokemon-weight"><span class = "pokemon-weight-prefix">Weight: </span>${pokemon.weight}<span class="pokemon-weight-units">kg</span></p>
-                    <p class="pokemon-height"><span class = "pokemon-height-prefix">Height: </span>${pokemon.height}<span class="pokemon-height-units">m</span></p>
-                </div>
-                <div class="pokemon-visual">
-                    <img class = "pokemon-image" src="${pokemon.front_default}" alt="Pokemon image">
-                    <div class="pokemon-types">
-                        ${pokemon.typeSprites.map(icon => `<img src="${icon}" class="type-icon">`).join("")}
+    if (pokemonArray.length){
+        pokemonArray.forEach((pokemon) => {
+            const card = document.createElement("li");
+            card.classList.add("pokemon-card");
+            card.innerHTML = `
+                <h2 class ="pokemon-name">${pokemon.name}</h2>
+                <div class = "pokemon-data">
+                    <div class="pokemon-info">
+                        <h3 class = "pokemon-number"><span class = "pokemon-number-prefix">N.º </span>${pokemon.id}</h3>
+                        <p class="pokemon-weight"><span class = "pokemon-weight-prefix">Weight: </span>${pokemon.weight}<span class="pokemon-weight-units">kg</span></p>
+                        <p class="pokemon-height"><span class = "pokemon-height-prefix">Height: </span>${pokemon.height}<span class="pokemon-height-units">m</span></p>
+                    </div>
+                    <div class="pokemon-visual">
+                        <img class = "pokemon-image" src="${pokemon.front_default}" alt="Pokemon image">
+                        <div class="pokemon-types">
+                            ${pokemon.typeSprites.map(icon => `<img src="${icon}" class="type-icon">`).join("")}
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        card.addEventListener('click', () => showPokemonStats(pokemon.id));
-        container.appendChild(card);
-    });
+            `;
+            card.addEventListener('click', () => showPokemonStats(pokemon.id));
+            container.appendChild(card);
+        });
+        return;
+    } 
+    const searchAlert = document.getElementById("search-alert");
+    const alertMessage = document.getElementById("alert-message");
+    searchAlert.style.display = "flex";
+    alertMessage.innerHTML = "We were not able to load the pokemons. Click the button to try again!"
+
 }
 
 async function loadPokemons(limit = 10) {
