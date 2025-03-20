@@ -1,6 +1,6 @@
 @font-face { font-family: Pixeboy; src: url(./fonts/Pixeboy.ttf); }
 @font-face { font-family: Press-Start-2P; src: url(./fonts/PressStart2P-vaV7.ttf);}
-@font-face { font-family: Pixeloid; src: url(./fonts/pixeloid/PixeloidSans-mLxMm.ttf); font-weight:sans}
+@font-face { font-family: Pixeloid; src: url(./fonts/pixeloid/PixeloidSans-mLxMm.ttf)}
 
 
 *{
@@ -30,13 +30,17 @@ body{
         font-family:'Pixeboy'; 
         color:hsl(52, 100%, 50%);
     }
+    #logo{
+        display: none;
+    }
 }
 
 .search-module{
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
     .search-bar{
+        width: 90%;
         background-color: white;
         display: flex;
         justify-content: space-between;
@@ -263,10 +267,121 @@ body{
     }
 }
 
-@media screen and (min-width: 768){
+@media screen and (min-width: 768px){
+    .home-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        #title{
+            text-align: left;
+            font-size: 6rem;
+            line-height: 4rem;
+            padding-left: 2.2rem;
+        }
+        #logo{
+            display: block;
+            height: 8rem;
+            margin-right: 3rem;
+        }
+    }    
+    .search-bar{
+        width: 80%;
+    }
+    #pokemon-list{
+        .pokemon-card{
+            width: 350px;
+            .pokemon-name{
+                font-size: 1.5rem;
+            }
+            .pokemon-data{
 
+                .pokemon-info{
+                    font-size: 1rem;
+                    .pokemon-number{
+                        font-size: 1.25rem;
+                    }
+                }
+            }
+        } 
+    }
+    #pokemon-modal{
+        #modal-pokemon-image{
+            width: 15rem;
+        }
+        .control-buttons-container{
+            display: flex; 
+            justify-content: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            .control-button{   
+                height: 2.5rem;
+            }  
+        }
+        .pokemon-name{
+            font-size: 2rem;
+
+        }  
+        .pokemon-number{
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .stats-container {
+            gap: 2.5rem;
+
+            .stat{
+
+                .stat-name{
+                    font-size: 1rem;
+
+                }
+                .stat-bar {
+
+                    .stat-square-filled {
+                        width:1.5rem;
+                        height:1.5rem;
+
+                    }
+                    .stat-square-blank{
+                        width:1.5rem;
+                        height:1.5rem;                        
+                        width:1.5rem;
+                    }
+                }
+            }
+        }
+    }
 }
 
-@media screen and (min-width: 1024){
-
+@media screen and (min-width: 1024px){
+    .home-content{
+        justify-content: left;
+        gap: 8rem;
+        #title{
+            font-size: 8rem;
+            line-height: 6rem;
+            padding-left: 4rem;
+        }        
+    }
+    .search-module{
+        .search-bar{
+            width: 95%;
+            height: 3rem;
+            #pokemon-search-input{
+                font-size: 1.25rem;
+            }
+        }
+        #search-alert{
+            #alert-message{
+                font-size: 1.25rem;
+            }
+            #reset-search-button{
+                width: 4rem;
+                height: 4rem;
+                img{
+                    width: 4rem;
+                    height: 4rem;
+                }
+            }
+        }
+    }
 }
