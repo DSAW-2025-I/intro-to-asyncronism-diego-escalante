@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Who's That Pokemon?</title>
+</head>
+<body id = "body">
+    <div class="home-content">
+        <h1 id="title">Who's That Pokemon?</h1>
+        <img id="logo" src = "./assets/detective-pikachu.png">
+    </div>
+    <div class="search-module">
+        <div class="search-bar">
+            <input class="search-input" id="pokemon-search-input" type="search" name="search-input" required="required" placeholder="Enter a Pokemon's name or number" autocomplete="off">
+            <button class="search-button" id="pokemon-search-button"><img src="./assets/search-icon.svg" alt="Search"></img></button>
+        </div>
+        <div id="search-alert">
+            <p id="alert-message"></p>
+            <button id="reset-search-button"><img src="./assets/reload.png"></button>
+        </div>
+    </div>
+    <img id="loading-spinner" src="./assets/loading-spinner.gif" alt="Loading...">
+    <ol id="pokemon-list"></ol>
+    <div id = "pokemon-modal"></div>
+    <script src="script.js"></script>
+</body>
+</html>
